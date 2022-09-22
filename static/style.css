@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*:hover, *:active, *:focus {
+    outline: none !important;
+}
+
+html, body {
+    height: 100%;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: none;
+}
+
+/* secretKeyPartEncoded IEkgYW0gdGhlIEJhdG1hbiA8PDw8PDw8PDw8 */
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+.task {
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #999;
+    max-width: 600px;
+    min-width: 300px;
+    margin: 0 auto;
+}
+
+.task + .task {
+    margin: 30px auto 0;
+}
+
+.taskInput {
+    padding: 10px 0;
+}
+
+.result {
+    padding: 5px;
+}
+
+.ok {
+    color: green;
+}
+
+.nok {
+    color: red;
+}
+.hint {
+    color: #999999;
+}
+
+.hintHide {
+    display: none;
+}
