@@ -1,6 +1,6 @@
 import re
 import base64
-import json
+import string
 from flask import Flask, url_for, Response, request, make_response
 
 app = Flask(__name__,
@@ -8,10 +8,21 @@ app = Flask(__name__,
             static_folder='static')
 
 
-@app.route("/")
-def root():
+@app.route("/lite")
+def lite():
     try:
-        with open('index.html', 'r') as index:
+        with open('lite.html', 'r') as index:
+            response = make_response(index.read())
+            response.set_cookie('secretKeyPartEncoded', 'PDw8PDw8PDw8PDwrKysrKysrKysrKw==')
+            return response
+    except Exception:
+        return 'error during read html happened'
+
+
+@app.route("/hard")
+def hard():
+    try:
+        with open('hard.html', 'r') as index:
             response = make_response(index.read())
             response.set_cookie('secretKeyPartEncoded', 'PDw8PDw8PDw8PDwrKysrKysrKysrKw==')
             return response
@@ -29,7 +40,8 @@ def task1():
     # spaces stripped
     if len(value) == 0:
         return {"response": False,
-                'showHint': True}
+                'showHint': True,
+                "secretKeyPartEncoded": "KysrKysrKysrKys+Pj4+Pj4+Pj4+Pj4+Pj4+"}
 
     clear = base64.b64decode(value).decode().strip()
     pattern = '^[a-zA-Z0-9!@#]{6,14}$'
@@ -47,34 +59,52 @@ def task1():
     return {"response": True}
 
 
-@app.route("/task2")
-def task2():
-    return {"secretKeyPartEncoded": "KysrKysrKysrKys+Pj4+Pj4+Pj4+Pj4+Pj4+"}
-
-
-@app.route("/task3")
-def task3():
+@app.route("/task1-help")
+def task1_help():
+    pattern = '^[a-zA-Z0-9!@#]{6,14}$'
     value = request.args.get('value')
-    if any(i not in '12345678' for i in value):
-        return {"response": ''}
+    clear = base64.b64decode(value).decode().strip()
+    if len(clear) < 6:
+        return {'response': 'Too short'}
+    if len(clear) > 14:
+        return {'response': 'Too long'}
 
-    if value.endswith('8'):
-        value = value[0:-1]
+    check_includes = has_numeric(clear) + has_special(clear) + has_alpha()
 
-    parity = ''
-    if len(value) > 0 and len(value) % 2 == 0:
-        parity = '8'
+    if check_includes == 1:
+        return {'response': 'Something is missing'}
+    elif check_includes == 2:
+        return {'response': 'Close enough, but still not all'}
 
-    if value == '':
-        return {"response": '1' + parity}
-    if value == '1':
-        return {"response": '2' + parity}
-    if value == '2':
-        return {"response": '35' + parity}
-    if value == '35':
-        return {"response": '467' + parity}
-    if value == '467':
-        return {"response": '26' + parity}
-    if value == '26':
-        return {"response": '1' + parity}
-    return {"response": '1' + parity}
+    if not any([i.isupper() for i in clear]):
+        return {'response': 'Capitalize it!'}
+
+    if count_numbers(clear) == 1:
+        return {'response': 'We need more numbers'}
+
+    for index, i in enumerate(clear):
+        if index < len(clear) - 2 and i.isnumeric() and clear[index + 1].isnumeric():
+            return {"response": 'It’s too close, separate them!'}
+
+    if count_special(clear) > 2:
+        return {'response': 'It’s too much!'}
+
+
+def has_special(value: str):
+    return 1 if any([i in '!@#' for i in value]) else 0
+
+
+def has_numeric(value: str):
+    return 1 if any([i.isnumeric() for i in value]) else 0
+
+
+def count_numbers(value: str):
+    return sum(map(str.isnumeric, value))
+
+
+def count_special(value: str):
+    return sum(map(lambda x: x in '!@#', value))
+
+
+def has_alpha(value: str):
+    return 1 if any([i.isalpha() for i in value]) else 0
