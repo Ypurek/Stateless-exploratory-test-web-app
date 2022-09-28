@@ -8,20 +8,65 @@ function task1() {
         encodedValue = btoa(value);
     } catch (error) {
         result.classList.add('nok')
-        result.textContent = 'nok'
+        result.textContent = 'I speak only En!'
     }
     fetch(url + encodedValue).then((response) => response.json()).then((data) => {
-        if (data.showHint) {
-            document.querySelector('.hint').classList.remove('hintHide')
-        }
-        let result = document.querySelector('.result');
-        if (data.response) {
-            result.classList.add('ok')
-            result.textContent = 'ok'
+        // if (data.showHint) {
+        //     document.querySelector('.hint').classList.remove('hintHide')
+        // }
+        if (data.response === 'OK') {
+            result.classList.add('ok');
+            result.textContent = 'ok';
         } else {
-            result.classList.add('nok')
-            result.textContent = 'nok'
+            result.classList.add('nok');
+            result.textContent = data.response;
         }
+    })
+}
+
+function task1_hard() {
+    let result = document.querySelector('.result');
+    result.classList.remove('ok', 'nok');
+    let url = '/task1-hard?value=';
+    let value = document.getElementById('textInput').value;
+    let encodedValue = '';
+    try {
+        encodedValue = btoa(value);
+    } catch (error) {
+        result.classList.add('nok')
+        result.textContent = 'I speak only En!'
+    }
+    fetch(url + encodedValue).then((response) => response.json()).then((data) => {
+        // if (data.showHint) {
+        //     document.querySelector('.hint').classList.remove('hintHide')
+        // }
+        if (data.response === 'OK') {
+            result.classList.add('ok');
+            result.textContent = 'ok';
+        } else {
+            result.classList.add('nok');
+            result.textContent = data.response;
+        }
+    })
+}
+
+function task1_help() {
+    let output = document.querySelector('.helpOutput');
+    let url = '/task-help?value=';
+    let value = document.querySelector('#numInputHelp').value;
+
+    fetch(url + value).then((response) => response.json()).then((data) => {
+        output.textContent = data.response;
+    })
+}
+
+function task1_help_hard() {
+    let output = document.querySelector('.helpOutput');
+    let url = '/task-help-hard?value=';
+    let value = document.querySelector('#numInputHelp').value;
+
+    fetch(url + value).then((response) => response.json()).then((data) => {
+        output.textContent = data.response;
     })
 }
 

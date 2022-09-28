@@ -9,14 +9,27 @@
 </head>
 <body>
 <div class="task">
-    <div><label>Task #1 (easy). Enter text here</label></div>
+    <div><label>Task #1. Hot and Cold game!</label></div>
     <div><label class="hint hintHide">Hint: a!yT1Q6dB#v</label></div>
-    <div class="taskInput"><input type="text" class="textInput" id="textInput"/><label class="result">?</label></div>
-    <div>
-        <button onclick="task1()">Check</button>
+    <div class="taskInput">
+        <input type="text" class="textInput" id="textInput"/>
+        <button onclick="task1_hard()">Check</button>
     </div>
-    <div class="resultOutput"></div>
+    <div><label class="result">?</label>
+        <div>
+            <div>
+                <hr/>
+            </div>
+            <div class="helpText"><label>If you our of the ideas, you can call for help!</label></div>
+            <div class="taskInput">
+                <input type="number" class="textInput" id="numInputHelp"/>
+                <button onclick="task1_help_hard()">Help!</button>
+                <div><label class="helpOutput"></label></div>
+            </div>
 
+
+        </div>
+    </div>
 </div>
 
 <div class="task">
