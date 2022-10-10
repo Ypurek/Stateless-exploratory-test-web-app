@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Challenge Accepted</title>
+    <link href="../static/challenge02/style.css" rel="stylesheet">
+</head>
+<body>
+<script>
+    function check() {
+        let url = '/challenge02/check?value=';
+        let inp = document.querySelector('.inputWrap');
+        let result = document.querySelector('.result');
+        fetch(url + inp.value).then((response) => response.json()).then((data) => {
+            result.textContent = data.result;
+        })
+    }
+</script>
+<div class="wrap">
+    <div class="task"><a href="/">to challenge list</a></div>
+    <div class="task">
+        <div><label>Say hello</label></div>
+        <div><input type="number" class="inputWrap"/><label class="result">?</label>
+        </div>
+        <div>
+            <button onclick="check()" disabled>Say</button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

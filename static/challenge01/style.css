@@ -36,3 +36,44 @@ label {display:block;}
     min-width: 300px;
     margin: 0 auto;
 }
+
+.task + .task {
+    margin: 30px auto 0;
+}
+
+.taskInput {
+    padding: 10px 0;
+}
+
+.result {
+    padding: 5px;
+}
+
+.ok {
+    color: green;
+}
+
+.nok {
+    color: red;
+}
+.hint {
+    color: #999999;
+}
+.resultOutput {
+    color: #999999;
+}
+
+.hintHide {
+    display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.helpOutput {
+  white-space: pre-wrap;
+  text-align: left;
+}
