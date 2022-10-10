@@ -1,3 +1,4 @@
+import binascii
 import re
 import base64
 from flask import Flask, url_for, Response, request, make_response
@@ -23,8 +24,12 @@ def task1():
     if len(value) == 0:
         return {"response": False,
                 'showHint': True}
+    clear = ''
+    try:
+        clear = base64.b64decode(value).decode().strip()
+    except binascii.Error:
+        clear = base64.b64decode(value.strip() + '+').decode().strip()
 
-    clear = base64.b64decode(value).decode().strip()
     pattern = '^[a-zA-Z0-9!@#]{6,14}$'
     if len(clear) < 6:
         return {'response': False, 'hint': 'too short'}
