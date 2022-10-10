@@ -92,3 +92,7 @@ function task3() {
         })
     })
 }
+
+function dis(element) {
+    element.disabled = true;
+}

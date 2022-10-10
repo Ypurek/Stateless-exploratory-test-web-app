@@ -139,6 +139,16 @@ def task1_help():
     return {'response': 'Cold! Try something else!'}
 
 
+hint = 'Hint: ' + \
+       'String 6-14 chars' + \
+       'Allowed chars a-zA-Z0-9!@#' + \
+       'At least 1 letter capital' + \
+       'Exactly 2 digits, but not next to each other' + \
+       '!@# not more then 2 any special chars' + \
+       'Non-unicode chars' + \
+       'Empty string'
+
+
 @app.route("/task-help-hard")
 def task1_help_hard():
     value = request.args.get('value')
