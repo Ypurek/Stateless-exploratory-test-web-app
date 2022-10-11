@@ -30,26 +30,33 @@ function task1() {
     })
 }
 
-function task2() {
-    let url = '/challenge01/task2?value=';
-    let result = '';
-    for (let i = 1; i <= 8; i++) {
-        let checkbox = document.querySelector('#c' + i);
-        if (checkbox.checked) {
-            result += i
-        }
-        checkbox.checked = !1
-    }
-
-    fetch(url + result).then((response) => response.json()).then((data) => {
-        data.response.split('').forEach(x => {
-            document.querySelector('#c' + x).checked = !0
-        })
-    })
-}
-
 // todo for secret key part
-// function task3() {
-//     let url = '/challenge01/task3';
+// function task2() {
+//     let url = '/challenge01/task2';
 //     fetch(url).then((response) => response.json()).then((data) => console.log(data));
 // }
+
+function task3() {
+    let url = '/challenge01/task3?value=';
+    let value = document.querySelector('.secretInput').value;
+    let result = document.querySelector('.secretOutput');
+    result.classList.remove('ok', 'nok');
+    result.textContent = '';
+    let encodedValue = '';
+    value = value.replace('❤️', '');
+    console.log(value);
+    try {
+
+        encodedValue = btoa(value);
+    } catch (error) {
+        result.classList.add('nok')
+        result.textContent = 'nok'
+        return;
+    }
+
+    fetch(url + encodedValue).then((response) => response.json()).then((data) => {
+        result.textContent = data.output;
+        if (data.result) result.classList.add('ok')
+        else result.classList.add('nok');
+    })
+}

@@ -53,32 +53,20 @@ def task1():
 
 @app.route("/challenge01/task2")
 def task2():
-    value = request.args.get('value')
-    if any(i not in '12345678' for i in value):
-        return {"response": ''}
-
-    if value.endswith('8'):
-        value = value[0:-1]
-
-    parity = ''
-    if len(value) > 0 and len(value) % 2 == 0:
-        parity = '8'
-
-    if value == '':
-        return {"response": '1' + parity}
-    if value == '1':
-        return {"response": '2' + parity}
-    if value == '2':
-        return {"response": '35' + parity}
-    if value == '35':
-        return {"response": '467' + parity}
-    if value == '467':
-        return {"response": '26' + parity}
-    if value == '26':
-        return {"response": '1' + parity}
-    return {"response": '1' + parity}
+    return {"secretKeyPartEncoded": "YmVzdCBRQSBFbmdp"}
 
 
 @app.route("/challenge01/task3")
 def task3():
-    return {"secretKeyPartEncoded": "YmVzdCBRQSBFbmdp"}
+    value = request.args.get('value')
+    clear = ''
+    try:
+        clear = base64.b64decode(value).decode().strip()
+    except binascii.Error:
+        clear = base64.b64decode(value.strip() + '+').decode().strip()
+
+    if clear.lower().strip() == 'you are the best qa engineer':
+        return {'result': True,
+                'output': 'well done!'}
+    return {'result': False,
+            'output': 'try again'}
